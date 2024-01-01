@@ -42,8 +42,8 @@ def login():
         return render_template('login.html')
 
     form_values = request.form
-    email = form_values['username']
-    password = form_values['password']
+    email = form_values.get('username')
+    password = form_values.get('password')
 
     with connection.cursor() as cur:
         result = cur.execute("SELECT * FROM users WHERE email = %s", [email])
