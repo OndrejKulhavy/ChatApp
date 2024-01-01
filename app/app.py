@@ -27,8 +27,8 @@ connection = pymysql.connect(host=os.getenv("DB_HOST"),
 @app.route('/')
 def index():
     if 'logged_in' in session:
-        return redirect(url_for('routing.chat'))
-    return render_template('login.html')
+        return redirect(url_for('chat'))
+    return redirect(url_for('login'))
 
 
 @app.route('/chat')
