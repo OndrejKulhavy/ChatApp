@@ -55,7 +55,7 @@ def login():
         return render_template('login.html', message='Invalid Email or Password')
 
     result = cur.fetchone()
-    password_hash = result['password']
+    password_hash = result['password_hash']
 
     if not sha256_crypt.verify(password, password_hash):
         return render_template('login.html', message='Invalid Email or Password')
@@ -100,7 +100,7 @@ def signup():
 
     connection.commit()
 
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('login'))
 
 
 @app.route('/logout')
