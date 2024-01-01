@@ -18,7 +18,7 @@
             <p class="text-sm text-muted-foreground">Create your account. It's free and only takes a few seconds.</p>
         </div>
         <div class="p-6">
-            <form class="flex flex-col space-y-4">
+            <form method="post" class="flex flex-col space-y-4">
                 <div class="flex flex-col space-y-1"><label
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         for="username">Username</label><input
@@ -40,15 +40,20 @@
                         class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                         id="profilePictureUrl" placeholder="http://example.com/profile.jpg" type="url"></div>
                 <p class="text-xs text-red-500 text-center">{{message}}</p>
-                <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white hover:bg-gray-800 active:bg-gray-900 h-10 px-4 py-2 mt-4 border border-gray-300">
+                <button type="submit"
+                        class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white hover:bg-gray-800 active:bg-gray-900 h-10 px-4 py-2 mt-4 border border-gray-300">
                     Sign Up
                 </button>
 
             </form>
         </div>
-        <div class="items-center p-6 flex justify-center"><p class="text-sm text-gray-600">
-            Already have an account? <a class="text-blue-600 hover:underline" href="{{ url_for('login') }}">Login</a>
-        </p></div>
+        <div class="items-center p-6 flex justify-center">
+            <p class="text-sm text-gray-600">
+                Already have an account?
+                <a class="text-blue-600 hover:underline"
+                   href="{{ url_for('login') }}">Login</a>
+            </p>
+        </div>
     </div>
 </div>
 </body>
