@@ -64,7 +64,7 @@ def login():
     session['email'] = result['email']
     session['username'] = result['username']
     session['user_id'] = result['user_id']
-    return redirect(url_for('main.index'))
+    return redirect(url_for('chat'))
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -106,7 +106,7 @@ def signup():
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('login'))
 
 
 if __name__ == '__main__':
