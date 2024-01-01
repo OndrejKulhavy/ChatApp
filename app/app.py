@@ -63,7 +63,7 @@ def login():
     session['logged_in'] = True
     session['email'] = result['email']
     session['username'] = result['username']
-    session['user_id'] = result['id']
+    session['user_id'] = result['user_id']
     return redirect(url_for('main.index'))
 
 
