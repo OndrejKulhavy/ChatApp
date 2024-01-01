@@ -42,3 +42,42 @@ Follow these steps to set up and run the project:
    ```bash
    npm start
    ```
+   
+
+## Database Schema 📚
+```mermaid
+classDiagram
+    direction BT
+    class chat_rooms {
+       varchar(255) room_name
+       int owner_id
+       int room_id
+    }
+    class chat_rooms_access {
+       int user_id
+       int room_id
+       int id
+    }
+    class messages {
+       int user_id
+       int room_id
+       varchar(255) content
+       timestamp timestamp
+       int message_id
+    }
+    class users {
+       varchar(60) username
+       varchar(255) email
+       varchar(255) profile_picture
+       varchar(255) password_hash
+       timestamp created_at
+       int user_id
+    }
+    
+    chat_rooms  -->  users : owner_id:user_id
+    chat_rooms_access  -->  chat_rooms : room_id
+    chat_rooms_access  -->  users : user_id
+    messages  -->  chat_rooms : room_id
+    messages  -->  users : user_id
+
+```

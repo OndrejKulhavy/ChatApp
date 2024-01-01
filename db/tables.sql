@@ -6,7 +6,7 @@ CREATE TABLE users
     user_id         INT AUTO_INCREMENT PRIMARY KEY,
     username        VARCHAR(60) UNIQUE NOT NULL,
     email           VARCHAR(255) UNIQUE NOT NULL CHECK ( email LIKE '%_@__%.__%'  ),
-    profile_picture VARCHAR(255)        NOT NULL DEFAULT 'https://i.imgur.com/1qk9n6Z.png',
+    profile_picture VARCHAR(255)        NOT NULL DEFAULT 'https://raw.githubusercontent.com/OndrejKulhavy/ChatApp/main/db/data/user_profile_picture.png',
     password_hash   VARCHAR(255)        NOT NULL,
     created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -21,7 +21,7 @@ CREATE TABLE chat_rooms
 
 CREATE TABLE chat_rooms_access
 (
-    PRIMARY KEY (user_id, room_id),
+    id     INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     room_id INT,
     FOREIGN KEY (user_id) REFERENCES users (user_id),
