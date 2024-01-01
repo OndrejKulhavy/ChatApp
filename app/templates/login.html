@@ -12,11 +12,12 @@
 
 <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
     <div class="rounded-lg border text-card-foreground w-full max-w-md p-6 bg-white shadow-md" data-v0-t="card">
-        <div class="flex flex-col space-y-1.5 p-6"><h3 class="text-2xl font-semibold leading-none tracking-tight">Log
-            In</h3>
-            <p class="text-sm text-muted-foreground">Log in to your account.</p></div>
-        <div class="p-6">
-            <form>
+        <form method="post">
+            <div class="flex flex-col space-y-1.5 p-6"><h3 class="text-2xl font-semibold leading-none tracking-tight">
+                Log
+                In</h3>
+                <p class="text-sm text-muted-foreground">Log in to your account.</p></div>
+            <div class="p-6">
                 <div class="grid w-full gap-4">
                     <div class="flex flex-col space-y-1.5">
                         <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -34,20 +35,20 @@
                                id="password" placeholder="Password" type="password">
                     </div>
                 </div>
-            </form>
-        </div>
-        <div class="items-center p-6 flex flex-col space-y-4">
-            <p class="text-xs text-red-500">{{message}}</p>
-            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white hover:bg-gray-800 active:bg-gray-900 h-10 px-4 py-2 w-full border border-gray-300">
-                Log In
-            </button>
+            </div>
+            <div class="items-center p-6 flex flex-col space-y-4">
+                <p class="text-xs text-red-500">{{message}}</p>
+                <button type="submit" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white hover:bg-gray-800 active:bg-gray-900 h-10 px-4 py-2 w-full border border-gray-300">
+                    Log In
+                </button>
 
-            <p class="text-center text-sm text-gray-600">
-                Don't have an account? <a class="text-blue-600 hover:underline" href="{{ url_for('signup') }}">Sign
-                up
-                here</a>.
-            </p>
-        </div>
+                <p class="text-center text-sm text-gray-600">
+                    Don't have an account? <a class="text-blue-600 hover:underline" href="{{ url_for('signup') }}">Sign
+                    up
+                    here</a>.
+                </p>
+            </div>
+        </form>
     </div>
 </div>
 </body>
