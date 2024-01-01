@@ -45,6 +45,9 @@ def login():
     email = form_values.get('username')
     password = form_values.get('password')
 
+    if not email or not password:
+        return render_template('login.html', message='Please enter required fields')
+
     with connection.cursor() as cur:
         result = cur.execute("SELECT * FROM users WHERE email = %s", [email])
 
