@@ -73,7 +73,8 @@ def signup():
     username = form_values.get('username')
     email = form_values.get('email')
     profile_picture_url = form_values.get('profilePictureUrl')
-    password_hash = sha256_crypt.hash(form_values.get('password'))
+    password = form_values.get('password')
+    password_hash = sha256_crypt.hash(str(password).encode('utf-8'))
 
     if not username or not email or not form_values['password']:
         return render_template('signup.html', message='Please enter required fields')
