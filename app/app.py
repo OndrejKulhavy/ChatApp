@@ -65,7 +65,7 @@ def login():
 
 
 @app.route('/signup', methods=['GET', 'POST'])
-def register():
+def signup():
     if request.method == 'GET':
         return render_template('signup.html')
 
