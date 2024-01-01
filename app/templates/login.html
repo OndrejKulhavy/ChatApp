@@ -18,26 +18,36 @@
         <div class="p-6">
             <form>
                 <div class="grid w-full gap-4">
-                    <div class="flex flex-col space-y-1.5"><label
-                            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                            for="username">Username / Email</label><input
-                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                            id="username" placeholder="Username or Email"></div>
-                    <div class="flex flex-col space-y-1.5"><label
-                            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                            for="password">Password</label><input
-                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                            id="password" placeholder="Password" type="password"></div>
+                    <div class="flex flex-col space-y-1.5">
+                        <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                               for="username">
+                            Email
+                        </label>
+                        <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                               id="username" placeholder="Email" type="email">
+                    </div>
+                    <div class="flex flex-col space-y-1.5">
+                        <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                               for="password">Password
+                        </label>
+                        <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                               id="password" placeholder="Password" type="password">
+                    </div>
                 </div>
             </form>
         </div>
         <div class="items-center p-6 flex flex-col space-y-4">
-            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full">
+            <p class="text-xs text-red-500">{{message}}</p>
+            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white hover:bg-gray-800 active:bg-gray-900 h-10 px-4 py-2 w-full border border-gray-300">
                 Log In
             </button>
+
             <p class="text-center text-sm text-gray-600">
-                Don't have an account? <a class="text-blue-600 hover:underline" href="#">Sign up here</a>.
-            </p></div>
+                Don't have an account? <a class="text-blue-600 hover:underline" href="{{ url_for('main.signup') }}">Sign
+                up
+                here</a>.
+            </p>
+        </div>
     </div>
 </div>
 </body>
