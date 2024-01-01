@@ -46,38 +46,36 @@ Follow these steps to set up and run the project:
 
 ## Database Schema 📚
 ```mermaid
-classDiagram
-    direction BT
-    class chat_rooms {
+erDiagram
+    CHAT_ROOMS {
+       int room_id PK
        varchar(255) room_name
-       int owner_id
-       int room_id
+       int owner_id FK
     }
-    class chat_rooms_access {
-       int user_id
-       int room_id
-       int id
+    CHAT_ROOM_ACCESS {
+       int id PK
+       int user_id FK
+       int room_id FK
     }
-    class messages {
-       int user_id
-       int room_id
+    MESSAGES {
+       int message_id PK
+       int user_id FK
+       int room_id FK
        varchar(255) content
-       timestamp timestamp
-       int message_id
+       timestamp created_at
     }
-    class users {
+    USERS {
+       int user_id PK
        varchar(60) username
-       varchar(255) email
+       varchar(255) email "Check for %_@__%.__%"
        varchar(255) profile_picture
        varchar(255) password_hash
        timestamp created_at
-       int user_id
     }
-    
-    chat_rooms  -->  users : owner_id:user_id
-    chat_rooms_access  -->  chat_rooms : room_id
-    chat_rooms_access  -->  users : user_id
-    messages  -->  chat_rooms : room_id
-    messages  -->  users : user_id
 
+    USERS ||--o{ MESSAGES : ""
+    CHAT_ROOM_ACCESS }o--|| USERS : ""
+    CHAT_ROOM_ACCESS }o--|| CHAT_ROOMS : ""
+    CHAT_ROOMS }o--|| USERS : "owns"
+    CHAT_ROOMS ||--o{ MESSAGES : ""
 ```
