@@ -271,6 +271,7 @@
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                window.location.href = `http://ondrej.codes:5000/chat`;
             })
             .catch(error => {
                 console.error(error);
