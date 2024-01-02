@@ -106,6 +106,9 @@ def signup():
     return redirect(url_for('login'))
 
 
+from flask import redirect, url_for
+
+
 @app.route('/chat/create_room', methods=['POST'])
 def create_room():
     if 'logged_in' not in session:
@@ -121,14 +124,20 @@ def create_room():
     if not room_name or not list_of_users:
         return {"error": "Please enter required fields"}
 
+    # Insert into chat_rooms table
     with connection.cursor() as cur:
         cur.execute("INSERT INTO chat_rooms(room_name, owner_id) VALUES(%s, %s)", (room_name, owner_id))
         connection.commit()
 
+        # Get the last inserted ID from the connection
+        room_id = cur.lastrowid
+
+    # Insert into chat_rooms_access table
     with connection.cursor() as cur:
-        for (user_id) in list_of_users:
-            cur.execute("INSERT INTO chat_rooms_access(room_id, user_id) VALUES(%s, %s)", (cur.lastrowid, user_id))
-            connection.commit()
+        for user_id in list_of_users:
+            cur.execute("INSERT INTO chat_rooms_access(room_id, user_id) VALUES(%s, %s)", (room_id, user_id))
+        connection.commit()
+
     return redirect(url_for('chat'))
 
 
