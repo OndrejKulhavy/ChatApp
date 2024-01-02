@@ -37,10 +37,8 @@ def chat():
         return redirect(url_for('login'))
 
     with connection.cursor() as cur:
-        print(session['username'])
         cur.execute('CALL GET_ROOMS_BY_USERNAME(%s)', [session['username']])
         rooms = cur.fetchall()
-        print(len(rooms))
 
     return render_template('app.html', rooms=rooms)
 
