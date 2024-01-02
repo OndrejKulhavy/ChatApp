@@ -194,15 +194,15 @@
         div.appendChild(span);
         div.appendChild(button);
         if (isAlreadyAdded(name)) {
-            div.remove();
+            return null;
         }
         return div;
     }
 
     function isAlreadyAdded(name) {
-        const people = document.getElementsByClassName('person-to-be-added');
+        const people = addedPeople.getElementsByClassName('person-to-be-added');
         for (let i = 0; i < people.length; i++) {
-            if (people[i].innerText.includes(name)) {
+            if (people[i].innerHTML.includes(name)) {
                 return true;
             }
         }
