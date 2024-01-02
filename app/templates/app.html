@@ -22,7 +22,8 @@
         <nav id="rooms" class="flex-1 overflow-y-auto p-6 space-y-2">
 
             {% for room in rooms %}
-            <div class="flex items-center space-x-3 cursor-pointer hover:bg-gray-200 transition-all rounded p-2 chat-room">
+            <div id="{{ room['room_name'] }}"
+                 class="flex items-center space-x-3 cursor-pointer hover:bg-gray-200 transition-all rounded p-2 chat-room">
                 <img src="https://raw.githubusercontent.com/OndrejKulhavy/ChatApp/main/db/data/user_profile_picture.png"
                      width="24" height="24">
                 <div class="flex-1">
@@ -167,12 +168,9 @@
     });
     onload = () => {
         const chatRooms = document.getElementsByClassName('chat-room');
-        if (chatRooms.length === 0) {
-            return;
-        }
         for (let i = 0; i < chatRooms.length; i++) {
             chatRooms[i].addEventListener('click', () => {
-                window.location.href = `{{ url_for('chat_room', room_name=chatRooms[i].children[1].children[0].innerText) }}`;
+                window.location.href = ` {{ url_for('chat', room_name=chatRooms[i].id) }}`;
             });
         }
     }
