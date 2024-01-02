@@ -48,20 +48,24 @@
         <section class="flex-1 overflow-y-auto p-6 space-y-4">
 
             {% for message in messages %}
+            {% if message['user_id'] == owner_id: %}
+            <div class="flex items-end justify-end">
+                <div class="p-4 rounded-lg bg-blue-50 dark:bg-blue-900 inline-block max-w-xs text-sm">
+                    <p>{{ message['content'] }}</p>
+                    <p class="text-xs text-gray-500 mt-2 text-right">{{ message['timestamp'] }}</p>
+                </div>
+            </div>
+            {% else %}
             <div class="flex items-end justify-start">
                 <div class="p-4 rounded-lg bg-gray-200 dark:bg-gray-700 inline-block max-w-xs text-sm">
                     <p>{{ message['content'] }}</p>
                     <p class="text-xs text-gray-500 mt-2">{{ message['timestamp'] }}</p>
                 </div>
             </div>
+            {% endif %}
             {% endfor %}
 
-            <div class="flex items-end justify-end">
-                <div class="p-4 rounded-lg bg-blue-50 dark:bg-blue-900 inline-block max-w-xs text-sm">
-                    <p>I'm doing great! How about you?</p>
-                    <p class="text-xs text-gray-500 mt-2 text-right">12:01 PM</p>
-                </div>
-            </div>
+
         </section>
 
         <footer class="p-6 border-t">
