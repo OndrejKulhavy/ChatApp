@@ -48,6 +48,8 @@ BEGIN
     ORDER BY messages.timestamp ASC;
 END;
 
+
+
 CREATE PROCEDURE get_rooms_by_user_id(IN user_id INT)
 BEGIN
     SELECT chat_rooms.room_id, chat_rooms.room_name, chat_rooms.owner_id
@@ -98,9 +100,25 @@ drop procedure if exists grant_access_to_room;
 select * from users;
 select * from chat_rooms;
 select * from chat_rooms_access;
+select * from messages;
 
 drop table chat_rooms_access;
 
 
 delete from chat_rooms;
 delete from chat_rooms_access;
+
+CREATE PROCEDURE GET_MESSAGES_BY_ROOM_NAME(IN room_name VARCHAR(255))
+BEGIN
+    SELECT messages.message_id, messages.user_id, messages.room_id, messages.content, messages.timestamp, users.username, users.profile_picture
+    FROM messages
+    INNER JOIN users ON messages.user_id = users.user_id
+    INNER JOIN chat_rooms ON messages.room_id = chat_rooms.room_id
+    WHERE chat_rooms.room_name = room_name
+    ORDER BY messages.timestamp ASC;
+END;
+
+
+INSERT INTO messages (user_id, room_id, content) VALUES (1, 10, 'Hello world!');
+INSERT INTO messages (user_id, room_id, content) VALUES (1, 10, 'How are you?');
+INSERT INTO messages (user_id, room_id, content) VALUES (2, 10, 'I am fine, thanks!');

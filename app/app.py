@@ -113,6 +113,25 @@ def signup():
 from flask import redirect, url_for
 
 
+@app.route('/chat/<room_name>')
+def chat_room(room_name):
+    if 'logged_in' not in session:
+        return redirect(url_for('login'))
+
+    with connection.cursor() as cur:
+        cur.execute('CALL GET_ROOMS_BY_USERNAME(%s)', session['username'])
+        rooms = cur.fetchall()
+
+    with connection.cursor() as cur:
+        cur.execute('CALL GET_MESSAGES_BY_ROOM_NAME(%s)', room_name)
+        messages = cur.fetchall()
+
+    sorted_by_time = sorted(messages, key=lambda k: k['timestamp'])
+
+    return render_template('app.html', rooms=rooms, room_name=room_name, messages=sorted_by_time,
+                           owner_id=session['user_id'])
+
+
 @app.route('/chat/create_room', methods=['POST'])
 def create_room():
     if 'logged_in' not in session:
