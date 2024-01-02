@@ -165,13 +165,18 @@
         modal.classList.add('hidden');
         modal.classList.remove('block');
     });
-
-    const chatRooms = document.getElementsByClassName('chat-room');
-    for (let i = 0; i < chatRooms.length; i++) {
-        chatRooms[i].addEventListener('click', () => {
-            window.location.href = `{{ url_for('chat_room', room_name=chatRooms[i].children[1].children[0].innerText) }}`;
-        });
+    onload = () => {
+        const chatRooms = document.getElementsByClassName('chat-room');
+        if (chatRooms.length === 0) {
+            return;
+        }
+        for (let i = 0; i < chatRooms.length; i++) {
+            chatRooms[i].addEventListener('click', () => {
+                window.location.href = `{{ url_for('chat_room', room_name=chatRooms[i].children[1].children[0].innerText) }}`;
+            });
+        }
     }
+
 </script>
 
 <script>
