@@ -179,6 +179,7 @@
                     searchList.appendChild(createSearchResult('😖 No results found'));
                 } else {
                     searchList.innerHTML = '';
+                    print(data);
                     data.forEach(user => {
                         searchList.appendChild(createSearchResult(user.username));
                     });
