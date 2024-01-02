@@ -90,3 +90,8 @@ select * from users;
 select * from chat_rooms;
 select * from chat_rooms_access;
 
+drop table chat_rooms_access;
+
+
+delete from chat_rooms;
+delete from chat_rooms_access;
