@@ -31,9 +31,10 @@ def index():
     return redirect(url_for('login'))
 
 
-@app.route('/chat')
+@app.route('/chat', methods=['GET', 'POST'])
 def chat():
-    return render_template('app.html')
+    if 'logged_in' not in session:
+        return redirect(url_for('login'))
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -107,6 +108,24 @@ def signup():
 def logout():
     session.clear()
     return redirect(url_for('login'))
+
+
+@app.route('api/search_users')
+def search_users():
+    if 'logged_in' not in session:
+        return {"error": "Not logged in"}
+    search_term = request.args.get('search_term')
+    if not search_term:
+        return {"users": []}
+
+    with connection.cursor() as cur:
+        result = cur.execute("SELECT * FROM users WHERE username LIKE %s", [f'%{search_term}%'])
+
+    if not result:
+        return {"users": []}
+
+    users = cur.fetchall()
+    return {"users": users}
 
 
 if __name__ == '__main__':
