@@ -118,9 +118,7 @@ def create_room():
     room_name = form_values.get('chat_room_name')
     list_of_users = form_values.getlist('users')
     owner_id = session['user_id']
-    with connection.cursor() as cur:
-        cur.execute("SELECT username FROM users WHERE user_id = %s", owner_id)
-        owner_username = cur.fetchone()['username']
+    owner_username = session['username']
 
     list_of_users.append(owner_username)
 
