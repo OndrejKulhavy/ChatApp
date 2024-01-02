@@ -160,7 +160,9 @@
             if (isSystemMessage) {
                 return;
             }
-            addedPeople.appendChild(createAddedPerson(name));
+            let new_person = createAddedPerson(name);
+            if (new_person)
+                addedPeople.appendChild(new_person);
             addPeople.value = '';
             searchList.innerHTML = '';
         });
@@ -191,13 +193,21 @@
 
         div.appendChild(span);
         div.appendChild(button);
-
-        if (addedPeople.children.length === 0) {
-            return "";
+        if (isAlreadyAdded(name)) {
+            div.remove();
         }
         return div;
     }
 
+    function isAlreadyAdded(name) {
+        const people = document.getElementsByClassName('person-to-be-added');
+        for (let i = 0; i < people.length; i++) {
+            if (people[i].innerText.includes(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     function searchPeople() {
         fetch(`http://ondrej.codes:5000/api/search_users?search_term=${addPeople.value}`)
