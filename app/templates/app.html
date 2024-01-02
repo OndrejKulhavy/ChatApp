@@ -175,12 +175,11 @@
             .then(data => {
                 searchList.innerHTML = '';
 
-                if (data.length === 0) {
-                    searchList.appendChild(createSearchResult('😖 No results found'));
+                if (data.users.length === 0) {
+                    searchList.appendChild(createSearchResult('😖 I can\'t find anyone with that name.'));
                 } else {
                     searchList.innerHTML = '';
-                    print(data);
-                    data.forEach(user => {
+                    data.users.forEach(user => {
                         searchList.appendChild(createSearchResult(user.username));
                     });
                 }
