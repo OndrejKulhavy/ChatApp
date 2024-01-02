@@ -112,9 +112,11 @@ def create_room():
         return {"error": "Not logged in"}
 
     form_values = request.form
-    room_name = form_values.get('room_name')
-    list_of_users = form_values.get('users')
+    room_name = form_values.get('chat_room_name')
+    list_of_users = form_values.getlist('users')
     owner_id = session['user_id']
+
+    list_of_users.append(owner_id)
 
     if not room_name or not list_of_users:
         return {"error": "Please enter required fields"}
@@ -128,6 +130,7 @@ def create_room():
             cur.execute("INSERT INTO chat_rooms_access(room_id, user_id) VALUES(%s, %s)", (cur.lastrowid, user_id))
             connection.commit()
     return redirect(url_for('chat'))
+
 
 @app.route('/logout')
 def logout():
