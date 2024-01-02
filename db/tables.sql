@@ -90,5 +90,3 @@ select * from users;
 select * from chat_rooms;
 select * from chat_rooms_access;
 
-ALTER TABLE chat_rooms
-ADD CONSTRAINT unique_room_name UNIQUE (room_name);

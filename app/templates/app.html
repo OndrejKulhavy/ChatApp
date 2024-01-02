@@ -230,21 +230,24 @@
         }
     });
 
-    sendModal.addEventListener('click', async () => {
+    sendModal.addEventListener('click', () => {
         let formData = new FormData();
         formData.append('chat_room_name', document.getElementById('chatRoomName').value);
         formData.append('users', JSON.stringify(listOfAddedPeople));
 
-        try {
-            const response = await fetch("{{ url_for('create_room') }}", {
-                method: "POST",
-                body: formData,
+        fetch("{{ url_for('create_room') }}", {
+            method: "POST",
+            body: formData,
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error(error);
             });
-            console.log(await response.json());
-        } catch (e) {
-            console.error(e);
-        }
     });
+
 </script>
 
 
