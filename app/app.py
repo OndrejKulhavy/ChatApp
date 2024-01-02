@@ -36,6 +36,8 @@ def chat():
     if 'logged_in' not in session:
         return redirect(url_for('login'))
 
+    return render_template('app.html')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -119,7 +121,8 @@ def search_users():
         return {"users": []}
 
     with connection.cursor() as cur:
-        result = cur.execute("SELECT user_id, username, profile_picture FROM users WHERE username LIKE %s", [f'%{search_term}%'])
+        result = cur.execute("SELECT user_id, username, profile_picture FROM users WHERE username LIKE %s",
+                             [f'%{search_term}%'])
 
     if not result:
         return {"users": []}

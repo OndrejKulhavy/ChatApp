@@ -104,6 +104,15 @@
                             id="addPeople"
                             placeholder="Type to search..."
                     />
+
+                    <div class="relative" style="margin: 0">
+                        <div class="absolute z-10 mt-0 w-full bg-white border border-gray-200 shadow-lg rounded-md">
+                            <ul id="search_list" class="divide-y divide-gray-200">
+                            </ul>
+                        </div>
+                    </div>
+
+
                 </div>
                 <div class="space-y-2">
                     <div class="flex items-center justify-between">
@@ -148,6 +157,45 @@
         modal.classList.remove('block');
     });
 </script>
+
+<script>
+    const addPeople = document.getElementById('addPeople');
+    const searchList = document.getElementById('search_list');
+
+    function createSearchResult(name) {
+        const li = document.createElement('li');
+        li.classList.add('px-3', 'py-2', 'hover:bg-gray-100', 'cursor-pointer');
+        li.innerText = name;
+        return li;
+    }
+
+    function searchPeople() {
+        fetch(`http://ondrej.codes:5000/api/search_users?search_term=${addPeople.value}`)
+            .then(response => response.json())
+            .then(data => {
+                searchList.innerHTML = '';
+
+                if (data.length === 0) {
+                    searchList.appendChild(createSearchResult('😖 No results found'));
+                } else {
+                    searchList.innerHTML = '';
+                    data.forEach(user => {
+                        searchList.appendChild(createSearchResult(user.username));
+                    });
+                }
+            });
+
+    }
+
+    addPeople.addEventListener('input', () => {
+        searchList.innerHTML = '';
+        if (addPeople.value.length > 0) {
+            searchList.appendChild(createSearchResult('🔍 Searching for people...'));
+        }
+        searchPeople();
+    });
+</script>
+
 
 </body>
 </html>
