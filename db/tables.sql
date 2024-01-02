@@ -122,3 +122,5 @@ END;
 INSERT INTO messages (user_id, room_id, content) VALUES (1, 10, 'Hello world!');
 INSERT INTO messages (user_id, room_id, content) VALUES (1, 10, 'How are you?');
 INSERT INTO messages (user_id, room_id, content) VALUES (2, 10, 'I am fine, thanks!');
+
+call GET_ROOMS_BY_USERNAME('pavlas');
