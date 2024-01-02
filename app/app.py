@@ -106,6 +106,29 @@ def signup():
     return redirect(url_for('login'))
 
 
+@app.route('/chat/create_room', methods=['POST'])
+def create_room():
+    if 'logged_in' not in session:
+        return {"error": "Not logged in"}
+
+    form_values = request.form
+    room_name = form_values.get('room_name')
+    list_of_users = form_values.get('users')
+    owner_id = session['user_id']
+
+    if not room_name or not list_of_users:
+        return {"error": "Please enter required fields"}
+
+    with connection.cursor() as cur:
+        cur.execute("INSERT INTO chat_rooms(room_name, owner_id) VALUES(%s, %s)", (room_name, owner_id))
+        connection.commit()
+
+    with connection.cursor() as cur:
+        for (user_id) in list_of_users:
+            cur.execute("INSERT INTO chat_rooms_access(room_id, user_id) VALUES(%s, %s)", (cur.lastrowid, user_id))
+            connection.commit()
+    return redirect(url_for('chat'))
+
 @app.route('/logout')
 def logout():
     session.clear()

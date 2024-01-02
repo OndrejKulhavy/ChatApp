@@ -124,7 +124,8 @@
                     class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
                 Cancel
             </button>
-            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+            <button type="button" id="send_modal"
+                    class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
                 Create
             </button>
         </div>
@@ -151,6 +152,7 @@
     const addPeople = document.getElementById('addPeople');
     const searchList = document.getElementById('search_list');
     const addedPeople = document.getElementById('added_people');
+    const sendModal = document.getElementById('send_modal');
     let listOfAddedPeople = [];
 
     function createSearchResult(name, isSystemMessage = false) {
@@ -225,6 +227,22 @@
             searchPeople();
         } else {
             searchList.innerHTML = '';
+        }
+    });
+
+    sendModal.addEventListener('click', async () => {
+        let formData = new FormData();
+        formData.append('chat_room_name', document.getElementById('chatRoomName').value);
+        formData.append('users', JSON.stringify(listOfAddedPeople));
+
+        try {
+            const response = await fetch("{{ url_for('create_room') }}", {
+                method: "POST",
+                body: formData,
+            });
+            console.log(await response.json());
+        } catch (e) {
+            console.error(e);
         }
     });
 </script>
