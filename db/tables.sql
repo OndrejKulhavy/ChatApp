@@ -71,3 +71,24 @@ BEGIN
     WHERE users.username = username;
 END;
 
+CREATE PROCEDURE grant_access_to_room(IN username VARCHAR(60), IN room_name VARCHAR(255), IN owner_id INT)
+BEGIN
+    DECLARE user_id INT;
+    DECLARE room_id INT;
+    SELECT users.user_id INTO user_id
+    FROM users
+    WHERE users.username = username;
+    SELECT chat_rooms.room_id INTO room_id
+    FROM chat_rooms
+    WHERE chat_rooms.room_name = room_name AND chat_rooms.owner_id = owner_id;
+    INSERT INTO chat_rooms_access (user_id, room_id) VALUES (user_id, room_id);
+END;
+
+drop procedure if exists grant_access_to_room;
+
+select * from users;
+select * from chat_rooms;
+select * from chat_rooms_access;
+
+ALTER TABLE chat_rooms
+ADD CONSTRAINT unique_room_name UNIQUE (room_name);

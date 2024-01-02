@@ -131,7 +131,7 @@ def create_room():
 
     with connection.cursor() as cur:
         for username in list_of_users:
-            cur.execute('CALL grant_access_to_room(%s, %s)', (username, room_name))
+            cur.execute('CALL grant_access_to_room(%s, %s, %case)', (username, room_name, owner_id))
     connection.commit()
 
     return redirect(url_for('chat'))
