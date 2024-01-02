@@ -56,6 +56,15 @@ BEGIN
     WHERE chat_rooms_access.user_id = user_id;
 END;
 
+CREATE PROCEDURE GET_ROOMS_BY_USERNAME(IN username VARCHAR(60))
+BEGIN
+    SELECT chat_rooms.room_id, chat_rooms.room_name, chat_rooms.owner_id
+    FROM chat_rooms
+    INNER JOIN chat_rooms_access ON chat_rooms.room_id = chat_rooms_access.room_id
+    INNER JOIN users ON chat_rooms_access.user_id = users.user_id
+    WHERE users.username = username;
+END;
+
 CREATE PROCEDURE get_users_by_room_id(IN room_id INT)
 BEGIN
     SELECT users.user_id, users.username, users.profile_picture
