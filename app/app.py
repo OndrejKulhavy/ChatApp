@@ -40,7 +40,7 @@ def chat():
         cur.execute('CALL GET_ROOMS_BY_USERNAME(%s)', [session['username']])
         rooms = cur.fetchall()
 
-    return render_template('chat.html', rooms=rooms)
+    return render_template('app.html', rooms=rooms)
 
 
 @app.route('/login', methods=['GET', 'POST'])
