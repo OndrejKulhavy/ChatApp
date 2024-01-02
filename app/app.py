@@ -113,7 +113,7 @@ def signup():
 from flask import redirect, url_for
 
 
-@app.route('/chat/<room_name>')
+@app.route('/chat/room/<string:room_name>')
 def chat_room(room_name):
     if 'logged_in' not in session:
         return redirect(url_for('login'))
