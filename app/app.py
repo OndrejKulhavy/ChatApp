@@ -126,17 +126,13 @@ def create_room():
 
     # Insert into chat_rooms table
     with connection.cursor() as cur:
-        cur.execute("INSERT INTO chat_rooms(room_name, owner_id) VALUES(%s, %s)", (room_name, owner_id))
+        cur.execute('INSERT INTO chat_rooms(room_name, owner_id) VALUES(%s, %s)', (room_name, owner_id))
         connection.commit()
 
-        # Get the last inserted ID from the connection
-        room_id = cur.lastrowid
-
-    # Insert into chat_rooms_access table
     with connection.cursor() as cur:
-        for user_id in list_of_users:
-            cur.execute("INSERT INTO chat_rooms_access(room_id, user_id) VALUES(%s, %s)", (room_id, user_id))
-        connection.commit()
+        for username in list_of_users:
+            cur.execute('CALL grant_access_to_room(%s, %s)', (username, room_name))
+    connection.commit()
 
     return redirect(url_for('chat'))
 
