@@ -110,7 +110,7 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('api/search_users')
+@app.route('/api/search_users')
 def search_users():
     if 'logged_in' not in session:
         return {"error": "Not logged in"}
