@@ -172,7 +172,7 @@
         div.classList.add('flex', 'items-center', 'justify-between');
 
         const span = document.createElement('span');
-        span.classList.add('text-sm');
+        span.classList.add('text-sm', 'pl-2'); // Added left padding
         span.innerText = "😎 " + name;
 
         const button = document.createElement('button');
@@ -181,7 +181,7 @@
             'ring-offset-background', 'transition-colors', 'focus-visible:outline-none', 'focus-visible:ring-2',
             'focus-visible:ring-ring', 'focus-visible:ring-offset-2', 'disabled:pointer-events-none',
             'disabled:opacity-50', 'hover:bg-accent', 'hover:text-accent-foreground', 'h-10', 'px-4', 'py-2',
-            'text-red-500'
+            'text-red-500', 'border', 'border-gray-300', 'person-to-be-added' // Added border styling
         );
         button.innerText = 'Remove';
         button.type = 'button';
@@ -192,6 +192,9 @@
         div.appendChild(span);
         div.appendChild(button);
 
+        if (addedPeople.children.length === 0) {
+            return "";
+        }
         return div;
     }
 
