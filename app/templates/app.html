@@ -114,7 +114,7 @@
 
 
                 </div>
-                <div class="space-y-2">
+                <div id="added_people" class="space-y-2">
                     <div class="flex items-center justify-between">
                         <span class="text-sm">Jane Doe</span>
                         <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 text-red-500">
@@ -161,12 +161,38 @@
 <script>
     const addPeople = document.getElementById('addPeople');
     const searchList = document.getElementById('search_list');
+    const addedPeople = document.getElementById('added_people');
 
-    function createSearchResult(name) {
+    function createSearchResult(name, isSystemMessage = false) {
         const li = document.createElement('li');
         li.classList.add('px-3', 'py-2', 'hover:bg-gray-100', 'cursor-pointer');
         li.innerText = name;
+        li.addEventListener('click', () => {
+            if (isSystemMessage) {
+                return;
+            }
+            addedPeople.appendChild(createAddedPerson(name));
+            addPeople.value = '';
+            searchList.innerHTML = '';
+        });
         return li;
+    }
+
+    function createAddedPerson(name) {
+        const div = document.createElement('div');
+        div.classList.add('flex', 'items-center', 'justify-between');
+        const span = document.createElement('span');
+        span.classList.add('text-sm');
+        span.innerText = name;
+        const button = document.createElement('button');
+        button.classList.add('inline-flex', 'items-center', 'justify-center', 'rounded-md', 'text-sm', 'font-medium', 'ring-offset-background', 'transition-colors', 'focus-visible:outline-none', 'focus-visible:ring-2', 'focus-visible:ring-ring', 'focus-visible:ring-offset-2', 'disabled:pointer-events-none', 'disabled:opacity-50', 'hover:bg-accent', 'hover:text-accent-foreground', 'h-10', 'px-4', 'py-2', 'text-red-500');
+        button.innerText = 'Remove';
+        button.addEventListener('click', () => {
+            div.remove();
+        });
+        div.appendChild(span);
+        div.appendChild(button);
+        return div;
     }
 
     function searchPeople() {
@@ -175,8 +201,8 @@
             .then(data => {
                 searchList.innerHTML = '';
 
-                if (data.users.length === 0) {
-                    searchList.appendChild(createSearchResult('😖 I can\'t find anyone with that name.'));
+                if (data.users.length > 0) {
+                    searchList.appendChild(createSearchResult('😖 I can\'t find anyone with that name.', true));
                 } else {
                     searchList.innerHTML = '';
                     data.users.forEach(user => {
@@ -190,7 +216,9 @@
     addPeople.addEventListener('input', () => {
         searchList.innerHTML = '';
         if (addPeople.value.length > 0) {
-            searchList.appendChild(createSearchResult('🔍 Searching for people...'));
+            searchList.appendChild(createSearchResult('🔍 Searching for people...', true));
+        } else {
+            searchList.innerHTML = '';
         }
         searchPeople();
     });
