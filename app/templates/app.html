@@ -22,17 +22,18 @@
         <nav id="rooms" class="flex-1 overflow-y-auto p-6 space-y-2">
 
             {% for room in rooms %}
-            <div class="flex items-center space-x-3 cursor-pointer hover:bg-primary/20 transition-all">
+            <div class="flex items-center space-x-3 hover:border-primary border p-2 transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent">
                 <img src="https://raw.githubusercontent.com/OndrejKulhavy/ChatApp/main/db/data/user_profile_picture.png"
                      width="24" height="24">
                 <div class="flex-1">
                     <h2 class="text-sm font-semibold">{{ room['room_name'] }}</h2>
                     <p class="text-xs text-gray-500">Active now</p>
                 </div>
-                <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent text-primary-foreground hover:bg-primary/80 h-3 w-3 rounded-full bg-green-500"
-                     onclick="handleClick(this)"></div>
+                <div class="inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent dark:border-gray-800 active:border-primary">
+                </div>
             </div>
             {% endfor %}
+
 
         </nav>
     </aside>
