@@ -119,7 +119,7 @@ def search_users():
         return {"users": []}
 
     with connection.cursor() as cur:
-        result = cur.execute("SELECT * FROM users WHERE username LIKE %s", [f'%{search_term}%'])
+        result = cur.execute("SELECT user_id, username, profile_picture FROM users WHERE username LIKE %s", [f'%{search_term}%'])
 
     if not result:
         return {"users": []}
