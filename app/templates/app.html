@@ -22,7 +22,7 @@
         <nav id="rooms" class="flex-1 overflow-y-auto p-6 space-y-2">
 
             {% for room in rooms %}
-            <div class="flex items-center space-x-3 cursor-pointer hover:bg-gray-200 transition-all rounded p-2">
+            <div class="flex items-center space-x-3 cursor-pointer hover:bg-gray-200 transition-all rounded p-2 chat-room">
                 <img src="https://raw.githubusercontent.com/OndrejKulhavy/ChatApp/main/db/data/user_profile_picture.png"
                      width="24" height="24">
                 <div class="flex-1">
@@ -165,6 +165,13 @@
         modal.classList.add('hidden');
         modal.classList.remove('block');
     });
+
+    const chatRooms = document.getElementsByClassName('chat-room');
+    for (let i = 0; i < chatRooms.length; i++) {
+        chatRooms[i].addEventListener('click', () => {
+            window.location.href = `{{ url_for('chat_room', room_name=chatRooms[i].children[1].children[0].innerText) }}`;
+        });
+    }
 </script>
 
 <script>
