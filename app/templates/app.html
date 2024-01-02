@@ -170,20 +170,31 @@
     function createAddedPerson(name) {
         const div = document.createElement('div');
         div.classList.add('flex', 'items-center', 'justify-between');
+
         const span = document.createElement('span');
         span.classList.add('text-sm');
-        span.innerText = name;
+        span.innerText = "😎 " + name;
+
         const button = document.createElement('button');
-        button.classList.add('inline-flex', 'items-center', 'justify-center', 'rounded-md', 'text-sm', 'font-medium', 'ring-offset-background', 'transition-colors', 'focus-visible:outline-none', 'focus-visible:ring-2', 'focus-visible:ring-ring', 'focus-visible:ring-offset-2', 'disabled:pointer-events-none', 'disabled:opacity-50', 'hover:bg-accent', 'hover:text-accent-foreground', 'h-10', 'px-4', 'py-2', 'text-red-500');
+        button.classList.add(
+            'inline-flex', 'items-center', 'justify-center', 'rounded-md', 'text-sm', 'font-medium',
+            'ring-offset-background', 'transition-colors', 'focus-visible:outline-none', 'focus-visible:ring-2',
+            'focus-visible:ring-ring', 'focus-visible:ring-offset-2', 'disabled:pointer-events-none',
+            'disabled:opacity-50', 'hover:bg-accent', 'hover:text-accent-foreground', 'h-10', 'px-4', 'py-2',
+            'text-red-500'
+        );
         button.innerText = 'Remove';
         button.type = 'button';
         button.addEventListener('click', () => {
             div.remove();
         });
+
         div.appendChild(span);
         div.appendChild(button);
+
         return div;
     }
+
 
     function searchPeople() {
         fetch(`http://ondrej.codes:5000/api/search_users?search_term=${addPeople.value}`)
@@ -205,10 +216,10 @@
         searchList.innerHTML = '';
         if (addPeople.value.length > 0) {
             searchList.appendChild(createSearchResult('🔍 Searching for people...', true));
+            searchPeople();
         } else {
             searchList.innerHTML = '';
         }
-        searchPeople();
     });
 </script>
 
