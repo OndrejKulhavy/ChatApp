@@ -170,7 +170,7 @@
         const chatRooms = document.getElementsByClassName('chat-room');
         for (let i = 0; i < chatRooms.length; i++) {
             chatRooms[i].addEventListener('click', () => {
-                window.location.href = `http://ondrej.codes:5000/chat/${chatRooms[i].id}`;
+                window.location.href = `http://ondrej.codes:5000/chat/room/${chatRooms[i].id}`;
             });
         }
     }
