@@ -151,6 +151,7 @@
     const addPeople = document.getElementById('addPeople');
     const searchList = document.getElementById('search_list');
     const addedPeople = document.getElementById('added_people');
+    let listOfAddedPeople = [];
 
     function createSearchResult(name, isSystemMessage = false) {
         const li = document.createElement('li');
@@ -189,24 +190,16 @@
         button.type = 'button';
         button.addEventListener('click', () => {
             div.remove();
+            listOfAddedPeople.remove(name);
         });
 
         div.appendChild(span);
         div.appendChild(button);
-        if (isAlreadyAdded(name)) {
+        if (listOfAddedPeople.includes(name)) {
             return null;
         }
+        listOfAddedPeople.push(name);
         return div;
-    }
-
-    function isAlreadyAdded(name) {
-        const people = addedPeople.getElementsByClassName('person-to-be-added');
-        for (let i = 0; i < people.length; i++) {
-            if (people[i].innerHTML.includes(name)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     function searchPeople() {
