@@ -40,7 +40,9 @@
                 const messageContent = document.createElement('div');
                 const timestampElement = document.createElement('p');
 
-                if (author === sessionStorage.getItem('username')) {
+                print(sessionStorage.getItem('username'));
+                print(author)
+                if (author !== sessionStorage.getItem('username')) {
                     messageContainer.classList.add('flex', 'items-end', 'justify-end');
                     messageContent.classList.add('p-4', 'rounded-lg', 'bg-blue-50', 'dark:bg-blue-900', 'inline-block', 'max-w-xs', 'text-sm');
                     timestampElement.classList.add('text-xs', 'text-gray-500', 'mt-2', 'text-right');
