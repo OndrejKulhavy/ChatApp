@@ -39,7 +39,9 @@ Searches messages based on a provided search term.
 - `q` (Query parameter): Search term.
 
 ### Example:
-`GET /api/messages/search?q=search_term`
+```bash
+GET /api/messages/search?q=search_term
+```
 
 ## 4. Get Messages by Username
 
