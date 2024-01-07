@@ -1,48 +1,76 @@
 # Real time Chat App
+This project is a Flask-based web application with SocketIO integration for real-time chat functionality. It includes user authentication, signup, login, and chat room creation features. The application connects to a MySQL database to store user information, messages, and chat rooms. Users can join existing chat rooms, create new ones, and send/receive messages in real-time. The server-side application is structured with routes for handling user interactions and utilizes SocketIO for handling real-time communication between clients. The project also includes API endpoints for retrieving messages, searching users, and other related functionalities.
 
-## Features 🚀
+# API Endpoints
 
-### Registration
+## 1. Get Messages by Room
 
-- **Authentication:** Only authenticated users can access the application.
-- **Username Collision Check:** Ensure unique usernames to prevent conflicts.
-- **Password Security:** Hash passwords for enhanced security.
+### Endpoint: `GET /api/messages/room`
 
-### Chat
+### Description:
+Retrieves messages for a specific chat room.
 
-- **Chat Room Creation:** Users can effortlessly create chat rooms.
-- **Accessibility Control:** Choose whether the chat room is open to everyone or only selected users.
-- **Real-time Chatting:** Enjoy seamless real-time conversations without refreshing the entire page.
+### Parameters:
+- `q` (Query parameter): Room name for which messages are to be retrieved.
 
-### REST API
+### Example: `GET /api/messages/room?q=example_room`
 
-- **Authentication Guard:** API is restricted to authenticated users only.
-- **GET Endpoints:**
-  - Retrieve all messages from all chat rooms.
-  - Retrieve all messages from a specific user.
-  - Retrieve all messages from a particular chat room.
-  - Retrieve all messages containing a specific word (case insensitive).
+## 2. Get All Messages
 
-## Instructions 🛠️
+### Endpoint:
+`GET /api/messages`
 
-Follow these steps to set up and run the project:
+### Description:
+Retrieves all messages from all chat rooms.
 
-1. **Clone the Repository:**
-   ```bash
-   git clone [repository_url]
-   ```
+### Example:
+```bash
+GET /api/messages
+```
 
-2. **Installation:**
-   ```bash
-   cd project_directory
-   npm install
-   ```
+## 3. Search Messages
 
-3. **Run the Application:**
-   ```bash
-   npm start
-   ```
-   
+### Endpoint: `GET /api/messages/search`
+
+### Description:
+Searches messages based on a provided search term.
+
+### Parameters:
+- `q` (Query parameter): Search term.
+
+### Example:
+`GET /api/messages/search?q=search_term`
+
+## 4. Get Messages by Username
+
+### Endpoint: `GET /api/messages/username`
+
+### Description:
+Retrieves messages for a specific user.
+
+### Parameters:
+- `q` (Query parameter): Username for which messages are to be retrieved.
+
+### Example:
+```bash
+GET /api/messages/username?q=example_user
+```
+
+## 5. Search Users
+
+### Endpoint: `GET /api/users`
+
+### Description:
+Searches users based on a provided search term.
+
+### Parameters:
+- `q` (Query parameter): Search term.
+
+### Example:
+```bash
+GET /api/users?q=search_term
+```
+---
 
 ## Database Schema 📚
 ```mermaid
