@@ -201,8 +201,10 @@ def joined(message):
 def text(message):
     """Sent by a client when the user entered a new message.
     The message is sent to all people in the room."""
+    room = session.get('room')
+
     with connection.cursor() as cur:
-        cur.execute('SELECT room_id FROM chat_rooms WHERE room_name = %s', session['room'])
+        cur.execute('SELECT room_id FROM chat_rooms WHERE room_name = %s', room)
         room_id = cur.fetchone()['room_id']
 
     with connection.cursor() as cur:
@@ -210,7 +212,8 @@ def text(message):
                     (session['user_id'], room_id, message['msg']))
         connection.commit()
     emit('message',
-         {'msg': message['msg'], 'author': session.get('username'), 'timestamp': time.strftime('%Y-%m-%d %H:%M:%S')})
+         {'msg': message['msg'], 'author': session.get('username'), 'timestamp': time.strftime('%Y-%m-%d %H:%M:%S')},
+         room=room)
 
 
 @socketio.on('left')
