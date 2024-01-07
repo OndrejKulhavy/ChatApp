@@ -132,7 +132,7 @@ def chat_room(room_name):
     session['room'] = room_name
 
     return render_template('app.html', rooms=rooms, room_name=room_name, messages=sorted_by_time,
-                           owner_id=session['user_id'])
+                           owner_id=session['user_id'], owner_username=session['username'])
 
 
 @app.route('/chat/create_room', methods=['POST'])
