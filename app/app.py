@@ -170,6 +170,75 @@ def logout():
     return redirect(url_for('login'))
 
 
+@app.route('/api/get_messages_by_room')
+def get_messages_by_room():
+    if 'logged_in' not in session:
+        return {"error": "Not logged in"}
+
+    room_name = request.args.get('room_name')
+    if not room_name:
+        return {"error": "Please enter required fields"}
+
+    with connection.cursor() as cur:
+        cur.execute('CALL GET_MESSAGES_BY_ROOM_NAME(%s)', room_name)
+        messages = cur.fetchall()
+
+    sorted_by_time = sorted(messages, key=lambda k: k['timestamp'])
+
+    return {"messages": sorted_by_time}
+
+
+@app.route('/api/get_all_messages')
+def get_all_messages():
+    if 'logged_in' not in session:
+        return {"error": "Not logged in"}
+
+    with connection.cursor() as cur:
+        cur.execute('SELECT * FROM messages group by room_id')
+        messages = cur.fetchall()
+
+    sorted_by_time = sorted(messages, key=lambda k: k['timestamp'])
+
+    return {"messages": sorted_by_time}
+
+
+@app.route('/api/search_mesages')
+def search_messages():
+    if 'logged_in' not in session:
+        return {"error": "Not logged in"}
+    search_term = request.args.get('search_term')
+    if not search_term:
+        return {"messages": []}
+
+    with connection.cursor() as cur:
+        result = cur.execute("SELECT * FROM messages WHERE content LIKE %s",
+                             [f'%{search_term}%'])
+
+    if not result:
+        return {"messages": []}
+
+    messages = cur.fetchall()
+    return {"messages": messages}
+
+
+@app.route('/api/get_messages_by_username')
+def get_messages_by_username():
+    if 'logged_in' not in session:
+        return {"error": "Not logged in"}
+
+    username = request.args.get('username')
+    if not username:
+        return {"error": "Please enter required fields"}
+
+    with connection.cursor() as cur:
+        cur.execute('CALL GET_MESSAGES_BY_USERNAME(%s)', username)
+        messages = cur.fetchall()
+
+    sorted_by_time = sorted(messages, key=lambda k: k['timestamp'])
+
+    return {"messages": sorted_by_time}
+
+
 @app.route('/api/search_users')
 def search_users():
     if 'logged_in' not in session:
