@@ -210,7 +210,7 @@ def text(message):
                     (session['user_id'], room_id, message['msg']))
         connection.commit()
     emit('message',
-         {'msg': session.get('username'), 'author': message['msg'], 'timestamp': time.strftime('%Y-%m-%d %H:%M:%S')})
+         {'msg': message['msg'], 'author': session.get('username'), 'timestamp': time.strftime('%Y-%m-%d %H:%M:%S')})
 
 
 @socketio.on('left')
