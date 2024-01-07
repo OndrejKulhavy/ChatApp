@@ -299,7 +299,7 @@
     }
 
     function searchPeople() {
-        fetch(`http://ondrej.codes:5000/api/search_users?search_term=${addPeople.value}`)
+        fetch(`http://ondrej.codes:5000/api/users?q=${addPeople.value}`)
             .then(response => response.json())
             .then(data => {
                 searchList.innerHTML = '';

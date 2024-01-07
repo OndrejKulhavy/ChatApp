@@ -170,12 +170,12 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/api/get_messages_by_room')
+@app.route('/api/messages/room')
 def get_messages_by_room():
     if 'logged_in' not in session:
         return {"error": "Not logged in"}
 
-    room_name = request.args.get('room_name')
+    room_name = request.args.get('q')
     if not room_name:
         return {"error": "Please enter required fields"}
 
@@ -188,7 +188,7 @@ def get_messages_by_room():
     return {"messages": sorted_by_time}
 
 
-@app.route('/api/get_all_messages')
+@app.route('/api/messages')
 def get_all_messages():
     if 'logged_in' not in session:
         return {"error": "Not logged in"}
@@ -202,11 +202,11 @@ def get_all_messages():
     return {"messages": sorted_by_time}
 
 
-@app.route('/api/search_mesages')
+@app.route('/api/messages/search')
 def search_messages():
     if 'logged_in' not in session:
         return {"error": "Not logged in"}
-    search_term = request.args.get('search_term')
+    search_term = request.args.get('q')
     if not search_term:
         return {"messages": []}
 
@@ -221,12 +221,12 @@ def search_messages():
     return {"messages": messages}
 
 
-@app.route('/api/get_messages_by_username')
+@app.route('/api/messages/username')
 def get_messages_by_username():
     if 'logged_in' not in session:
         return {"error": "Not logged in"}
 
-    username = request.args.get('username')
+    username = request.args.get('q')
     if not username:
         return {"error": "Please enter required fields"}
 
@@ -239,11 +239,11 @@ def get_messages_by_username():
     return {"messages": sorted_by_time}
 
 
-@app.route('/api/search_users')
+@app.route('/api/users')
 def search_users():
     if 'logged_in' not in session:
         return {"error": "Not logged in"}
-    search_term = request.args.get('search_term')
+    search_term = request.args.get('q')
     if not search_term:
         return {"users": []}
 
