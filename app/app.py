@@ -202,8 +202,12 @@ def text(message):
     """Sent by a client when the user entered a new message.
     The message is sent to all people in the room."""
     with connection.cursor() as cur:
+        cur.execute('SELECT room_id FROM chat_rooms WHERE room_name = %s', session['room'])
+        room_id = cur.fetchone()['room_id']
+
+    with connection.cursor() as cur:
         cur.execute('INSERT INTO messages(user_id, room_id, content, timestamp) VALUES(%s, %s, %s, NOW())',
-                    (session['user_id'], session['room'], message['msg']))
+                    (session['user_id'], room_id, message['msg']))
         connection.commit()
     emit('message',
          {'msg': session.get('username'), 'author': message['msg'], 'timestamp': time.strftime('%Y-%m-%d %H:%M:%S')})
