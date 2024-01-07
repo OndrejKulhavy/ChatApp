@@ -6,6 +6,68 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"
+            integrity="sha384-mZLF4UVrpi/QTWPA7BjNPEnkIfRFn4ZEO3Qt/HFklTJBj/gBOV8G3HcKn4NfQblz"
+            crossorigin="anonymous"></script>
+    <script>
+        var socket;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            socket = io.connect('http://ondrej.codes:5000');
+
+            socket.on('connect', function () {
+                socket.emit('joined', {});
+            });
+
+
+            socket.on('message', function (data) {
+                const messageContainer = generateMessageHTML(data.msg, data.author, data.timestamp);
+                document.getElementById('messages').appendChild(messageContainer);
+                document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+            });
+
+            document.getElementById('text').addEventListener('keypress', function (e) {
+                var code = e.keyCode || e.which;
+                if (code === 13) {
+                    var text = document.getElementById('text').value;
+                    document.getElementById('text').value = '';
+                    socket.emit('text', {msg: text});
+                }
+            });
+
+            function generateMessageHTML(message, author, timestamp) {
+                const messageContainer = document.createElement('div');
+                const messageContent = document.createElement('div');
+                const timestampElement = document.createElement('p');
+
+                if (author === sessionStorage.getItem('username')) {
+                    messageContainer.classList.add('flex', 'items-end', 'justify-end');
+                    messageContent.classList.add('p-4', 'rounded-lg', 'bg-blue-50', 'dark:bg-blue-900', 'inline-block', 'max-w-xs', 'text-sm');
+                    timestampElement.classList.add('text-xs', 'text-gray-500', 'mt-2', 'text-right');
+
+                    messageContent.innerHTML = `<p>${message}</p>`;
+                    timestampElement.innerHTML = `${author} - ${timestamp}`;
+
+                    messageContent.appendChild(timestampElement);
+                    messageContainer.appendChild(messageContent);
+                } else {
+                    messageContainer.classList.add('flex', 'items-end', 'justify-start');
+                    messageContent.classList.add('p-4', 'rounded-lg', 'bg-gray-200', 'dark:bg-gray-700', 'inline-block', 'max-w-xs', 'text-sm');
+                    timestampElement.classList.add('text-xs', 'text-gray-500', 'mt-2');
+
+                    messageContent.innerHTML = `<p>${message}</p>`;
+                    timestampElement.innerHTML = `${timestamp}`;
+
+                    messageContent.appendChild(timestampElement);
+                    messageContainer.appendChild(messageContent);
+                }
+
+                return messageContainer;
+            }
+
+        });
+
+    </script>
     <title>Chat</title>
 </head>
 <body>
@@ -47,11 +109,9 @@
                class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-black text-white hover:bg-accent hover:text-accent-foreground h-10 w-20">
                 <p>Log Out</p>
             </a>
-
-
         </header>
 
-        <section class="flex-1 overflow-y-auto p-6 space-y-4">
+        <section id="messages" class="flex-1 overflow-y-auto p-6 space-y-4">
 
             {% for message in messages %}
             {% if message['user_id'] == owner_id: %}

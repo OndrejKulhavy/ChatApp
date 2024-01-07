@@ -1,9 +1,10 @@
 import os
+import time
 
 import pymysql
 from flask import Flask, redirect, render_template, request, session, url_for
 from flask.cli import load_dotenv
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, emit, join_room, leave_room
 from passlib.handlers.sha2_crypt import sha256_crypt
 
 app = Flask(__name__)
@@ -128,6 +129,8 @@ def chat_room(room_name):
 
     sorted_by_time = sorted(messages, key=lambda k: k['timestamp'])
 
+    session['room'] = room_name
+
     return render_template('app.html', rooms=rooms, room_name=room_name, messages=sorted_by_time,
                            owner_id=session['user_id'])
 
@@ -184,6 +187,34 @@ def search_users():
 
     users = cur.fetchall()
     return {"users": users}
+
+
+@socketio.on('joined')
+def joined(message):
+    """Sent by clients when they enter a room.
+    A status message is broadcast to all people in the room."""
+    room = session.get('room')
+    join_room(room)
+
+
+@socketio.on('text')
+def text(message):
+    """Sent by a client when the user entered a new message.
+    The message is sent to all people in the room."""
+    with connection.cursor() as cur:
+        cur.execute('INSERT INTO messages(user_id, room_id, content, timestamp) VALUES(%s, %s, %s, NOW())',
+                    (session['user_id'], session['room'], message['msg']))
+        connection.commit()
+    emit('message',
+         {'msg': session.get('username'), 'author': message['msg'], 'timestamp': time.strftime('%Y-%m-%d %H:%M:%S')})
+
+
+@socketio.on('left')
+def left(message):
+    """Sent by clients when they leave a room.
+    A status message is broadcast to all people in the room."""
+    room = session.get('room')
+    leave_room(room)
 
 
 if __name__ == '__main__':
